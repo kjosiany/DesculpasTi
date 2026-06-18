@@ -23,6 +23,3 @@ Para garantir que o projeto rodasse até em uma torradeira sem dar B.O., a arqui
 
 Se por algum milagre divino a internet cair e você precisar clonar essa obra de arte: https://maracutaiati.vercel.app/
 
-1. Clone o repositório:
-```bash
-git clone [https://github.com/kjosiany/DesculpasTi.git](https://github.com/kjosiany/DesculpasTi.git)
