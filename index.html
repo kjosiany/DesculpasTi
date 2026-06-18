@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteador de Desculpas - TI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Fira Code', 'Courier New', Courier, monospace; 
+        }
+
+        body {
+            background-color: #181824; 
+            color: #e3e3e6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #1f1f2e;
+            border: 1px solid #383854;
+            border-radius: 8px;
+            max-width: 550px;
+            width: 100%;
+            padding: 30px;
+        }
+
+        h1 {
+            font-size: 1.3rem;
+            color: #ff79c6; 
+            margin-bottom: 6px;
+        }
+
+        .subtitulo {
+            font-size: 0.85rem;
+            color: #6272a4; 
+            margin-bottom: 25px;
+        }
+
+        .visor {
+            background-color: #141420;
+            border: 1px solid #2d2d44;
+            border-radius: 6px;
+            min-height: 120px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        #desculpa {
+            font-size: 1.05rem;
+            color: #50fa7b; 
+            line-height: 1.5;
+        }
+
+        .girando {
+            color: #ffb86c !important; 
+        }
+
+        .btn-sortear {
+            background-color: #bd93f9; 
+            color: #181824;
+            border: none;
+            padding: 14px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: background 0.2s;
+        }
+
+        .btn-sortear:hover:not(:disabled) {
+            background-color: #caa5fa;
+        }
+
+        .btn-sortear:disabled {
+            background-color: #2d2d44;
+            color: #6272a4;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Plantão da Gambiarra: Respostas para (não) usar, caso necessario</h1>
+        <p class="subtitulo">Use quando o sistema for de arrasta e você precisar de 15 minutos</p>
+
+        <div class="visor">
+            <p id="desculpa">Aguardando voce startar...</p>
+        </div>
+
+        <button class="btn-sortear" id="btn-gerar">Sortear  </button>
+    </div>
+
+    <script>
+    const desculpas = [
+        "O código funcionou no meu horóscopo de hoje, o problema é o seu signo, ctz...",
+        "O estagiário derrubou café no servidor e o banco de dados tá processando em modo cafeinado, segura as pontas",
+        "O código tá certo, o universo é que mudou de constante física após a última atualização.",
+        "O servidor cansou de carregar o peso do setor e tirou uma folga não remunerada.",
+        "O bug só acontece em dias que terminam com a letra 'A'.",
+        "Não caiu o sistema, ele só foi ali tomar um ar e já volta.",
+        "É que o CSS brigou com o HTML e o JavaScript tá tentando apaziguar a relação.",
+        "Aperta F5 três vezes, bate três palminhas e reza um Pai Nosso que funciona.",
+        "Nao é lentidao! o sistema esta mais calminho porque ta frio.",
+        "Estou limpando o cache mental do sistema, aguarde o incenso fazer efeito.",
+        "O banco de dados foi de arrasta pra cima, mas estamos tentando reanimar na base do desfibrilador elétrico.",
+        "A regra de negócio mudou de ideia porque achou o fluxo muito tóxico.",
+        "O código tá certo, o monitor do usuário é que tá transmitindo em outra dimensão.",
+        "Não é bug, é o sistema testando o seu nível de resiliência e inteligência emocional hoje.",
+        "O JavaScript se sentiu muito pressionado pelo CSS e se isolou no quarto.",
+        "Dá três pulinhos com o pé esquerdo segurando o mouse que o gráfico carrega.",
+        "O banco de dados se assustou com o barulho do trovão e se escondeu embaixo do servidor.",
+        "O algoritmo entrou em modo de retiro espiritual, não mande requisições até o alinhamento dos planetas.",
+        "Essa linha de código foi escrita sob forte emoção, por isso o resultado é imprevisível.",
+        "O Wi-Fi evaporou por causa do calor de Uberlândia, estamos esperando o vento refrescar.",
+        "O cabo de rede tá com tontura por causa de tanta curva que o fluxo de dados fez.",
+        "O backend achou o seu tom de voz na requisição muito agressivo e se recusou a responder.",
+        "A API tá com preguiça hoje porque é meio de semana, tenta mais tarde com jeitinho.",
+        "O sistema entrou em férias coletivas de 5 minutos, favor não insistir.",
+        "O código está em horário ofício, o retorno das funções acontece em 40 minutos.",
+        "O bug foi promovido a Feature Senior por tempo de serviço, agora não podemos mais mexer nele."
+    ];
+
+    const elementoDesculpa = document.getElementById('desculpa');
+    const botaoGerar = document.getElementById('btn-gerar');
+
+    botaoGerar.addEventListener('click', () => {
+        botaoGerar.disabled = true;
+        elementoDesculpa.classList.add('girando');
+
+        let tempoDecorrido = 0;
+        
+        const intervaloRoleta = setInterval(() => {
+            const indiceAleatorio = Math.floor(Math.random() * desculpas.length);
+            elementoDesculpa.textContent = `[PROCESSANDO] "${desculpas[indiceAleatorio]}"`;
+            tempoDecorrido += 100;
+
+            if (tempoDecorrido >= 3000) {
+                clearInterval(intervaloRoleta);
+                
+                const indiceFinal = Math.floor(Math.random() * desculpas.length);
+                elementoDesculpa.textContent = `"${desculpas[indiceFinal]}"`;
+                
+                elementoDesculpa.classList.remove('girando');
+                botaoGerar.disabled = false;
+            }
+        }, 100);
+    });
+    </script> 
+</body>
+</html>
